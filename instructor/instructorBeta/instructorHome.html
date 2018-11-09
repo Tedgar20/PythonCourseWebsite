@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<script>
+		//This function gets questions from the question bank and populates a form with all the available questions
+        function getQuestions(QUESTIONS){
+			var currentUser = sessionStorage.getItem("currentUser");
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function(){
+				if(this.readyState == 4 && this.status == 200){
+					 var data = this.responseText;
+					 jsonResponse = JSON.parse(data);
+					 //document.getElementById("Database").innerHTML = data;
+					 for( var i in jsonResponse ){
+						loadQuestion(jsonResponse[i], +i+1);
+					}
+					addButton();
+				}
+			};
+			xhttp.open("POST", "https://web.njit.edu/~efc9/login_page.php",true);
+			xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+			xhttp.send(`submit=${QUESTIONS}&currentUser=${currentUser}`);
+        }
+	
+		//This function is called only when question are loaded and is ment to add a submit button for the make exam form
+		function addButton(){
+			 var mybr = document.createElement('br');
+			 var newButton = document.createElement("INPUT");
+			
+			 newButton.setAttribute("type", "submit");
+			 newButton.setAttribute("name", "submit");
+			 newButton.setAttribute("value", "Make Exam");
+			
+			 document.getElementById("choice").appendChild(newButton);
+			 document.getElementById("choice").appendChild(mybr);
+		}
+		
+		//This function loads all the questions that were submitted to the question bank
+		function loadQuestion (question, num) { 
+			  var mybr = document.createElement('br');
+			  var newContent = document.createTextNode(num + " " + question); 
+			  
+			  var newInput = document.createElement("INPUT"); 
+			  newInput.setAttribute("type", "checkbox");
+			  newInput.setAttribute("name", "formCheck[]");
+			  newInput.setAttribute("id", "question"+num);
+			  newInput.setAttribute("value", question);
+			
+			  document.getElementById("choice").appendChild(newInput);
+			  document.getElementById("choice").appendChild(newContent);
+			  document.getElementById("choice").appendChild(mybr);
+		}
+		
+		//This function takes the questions you chose and makes an exam for you with those questions
+		function makeExam(){
+			var xhttp = new XMLHttpRequest();
+			var form = document.getElementById("choice");
+			var formData = new FormData(form);
+
+			xhttp.onreadystatechange = function(){
+				if(this.readyState == 4 && this.status == 200){
+					 var data = this.responseText;
+					 //var jsonResponse = JSON.parse(data);
+					 document.getElementById("Database").innerHTML = data;
+				}
+			};
+			xhttp.open("POST", "https://web.njit.edu/~efc9/login_page.php",true);
+			xhttp.send(formData);
+        }
+</script>
+</head>
+	
+<body>
+	
+<h2>Instructor Home</h2>
+	
+<form action="makeQuestions.html">
+    <input type="submit" value="Go make questions" />
+</form>
+
+<form action="javascript:getQuestions(submit)" method="post" accept-charset=utf-8>
+	<input type="submit" id="submit" name="submit" value="Get Qustions" />
+</form>
+
+<form id="choice" action="javascript:makeExam()" method="post" accept-charset=utf-8>
+</form>
+
+<p id="Database"></p>
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+body {
+    font-family: Arial;
+    background: #903C3C ;
+}
+.wrap {
+	width:250px;
+	height: auto;
+	margin: auto;
+	margin-top: 10%;
+}
+/* css for any input tags in div wrap class */
+.wrap input {
+	border: none;
+	background: #fff;
+  	font-family:Arial ;
+  	font-weight:700 ;
+	display: block;
+	height: 40px;
+	outline: none;
+	width: calc(100% - 24px) ;
+	margin: auto;
+	padding: 6px 12px 6px 12px;
+}
+/* h2 css inside div wrap class */
+.wrap h2 {
+	color:white;
+	text-align: center;
+	font-family:Arial ;
+  	font-weight:700 ;
+	display: block;
+	height: 40px;
+	outline: none;
+	width: calc(100% - 24px) ;
+	margin: auto;
+	padding: 6px 12px 6px 12px;
+}
+/* User name css inside div wrap class */
+.wrap input[type="text"] {
+	border-radius: 7px 7px 0px 0px ;
+}
+/* password css inside div wrap class */
+.wrap input[type="password"] {
+	border-radius: 0px 0px 7px 7px ;
+}
+/* submit button css inside div wrap class */
+.wrap button {
+	width: 100%;
+	border-radius: 7px;
+	background: #b6ee65;
+	text-decoration: center;
+	border: none;
+	color: #51771a;
+  	margin-top:-5px;
+	padding-top: 14px;
+	padding-bottom: 14px;
+	outline: none;
+	font-size: 13px;	
+	border-bottom: 3px solid #307d63;
+	cursor: pointer;
+}
