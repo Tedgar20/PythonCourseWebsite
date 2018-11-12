@@ -24,6 +24,7 @@ function addButton(){
 	 var newButton = document.createElement("INPUT");
 
 	 newButton.setAttribute("type", "submit");
+	 newButton.setAttribute("class", "myButton");
 	 newButton.setAttribute("name", "submit");
 	 newButton.setAttribute("value", "Select");
 
@@ -48,18 +49,11 @@ function addExamButtons (examNum) {
 	  		examOptions.setAttribute("name", "examChoice");
 	  		examOptions.setAttribute("value", examID);
 		  
-		  	/*var uExam = document.createElement("INPUT");
-		  	uExam.setAttribute("type", "hidden");
-			uExam.setAttribute("id", uniqueExam);
-			uExam.setAttribute("name", "examChoice[]");
-			uExam.setAttribute("value", uniqueExam);*/
-		  
 		  	var student = document.createElement("p");
 		  	student.setAttribute("id", i);
 		  
 		  	var studentText = document.createTextNode(studentName);
 		  
-		  	//document.getElementById("examChoices").appendChild(uExam);
 		  	document.getElementById("examChoices").appendChild(student);
 		  	document.getElementById(i).appendChild(studentText);
 		  	document.getElementById("examChoices").appendChild(examOptions);	

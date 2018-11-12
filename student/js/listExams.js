@@ -27,9 +27,10 @@ function addButton(){
 	 newButton.setAttribute("type", "submit");
 	 newButton.setAttribute("name", "submit");
 	 newButton.setAttribute("value", "Select");
+	 newButton.setAttribute("class", "myButton");
 
-		document.getElementById("examChoices").appendChild(mybr);
-		document.getElementById("examChoices").appendChild(mybr);
+	 document.getElementById("examChoices").appendChild(mybr);
+	 document.getElementById("examChoices").appendChild(mybr);
 	 document.getElementById("examChoices").appendChild(newButton);
 }
 
@@ -51,9 +52,6 @@ function addExamButtons (examNum) {
 	radioLabel.appendChild(examOptions);
 	
 	document.getElementById("examChoices").appendChild(radioLabel);
-	/*document.getElementById("examChoices").appendChild(examOptions);
-	document.getElementById("examChoices").appendChild(examNumPara);
-	document.getElementById(ran).appendChild(radioLabel);*/
 	document.getElementById("examChoices").appendChild(mybr);
 }
 

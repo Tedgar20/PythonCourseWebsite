@@ -7,13 +7,14 @@
 </head>
 	
 <body onload="getScores()">
-	
+  <input id="goBack" type="button" value="Go Home" onclick="location.href = 'https://web.njit.edu/~efc9/cs490/instructor/instructorHome.html';">
+
 <h2>Exam Overview</h2>
-	<input id="goBack" type="button" value="Go Home" onclick="location.href = 'https://web.njit.edu/~efc9/cs490/instructor/instructorHome.html';">
-	<p id="response"></p>
 	<form id="scores" action="javascript:submitExam()"  method="post" accept-charset=utf-8>
 		
-		<input id="submitButton" type="submit" value="Post Exam Grade">
+		<input id="submitButton" class = "myButton" type="submit" value="Post Exam Grade">
 	</form>
+	
+	<p id="response"></p>
 </body>
 </html>

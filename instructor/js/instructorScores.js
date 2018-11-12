@@ -31,11 +31,6 @@ function loadScores(examScores){
 			tableRow.setAttribute("id", "");
 			var tableElement = document.createElement("td");
 			tableElement.setAttribute("id", "");
-	
-			
-			/*var questionInput = document.createElement("TEXTAREA");
-			questionInput.defaultValue = question;
-			questionInput.readOnly = true;*/
 		
 			var questionPara = document.createElement("p");
 			var questionParaText = document.createTextNode(question);
@@ -45,9 +40,6 @@ function loadScores(examScores){
 			var questionDiv = document.createElement("div");
 			questionDiv.appendChild(questionPara);
 			questionDiv.setAttribute("class", "questionDivClass");
-			//Give each of the below elements the same name except questionInput
-			//TextAreas will have a default value set
-			//QuestionInput should not be editable
 		
 			var studentAnsTextArea = document.createElement("TEXTAREA");
 			studentAnsTextArea.defaultValue = studentAnswer;
@@ -72,13 +64,6 @@ function loadScores(examScores){
 			studentResultDiv.appendChild(gradePara);
 			studentResultDiv.appendChild(gradeInput);
 		
-			/*var gradeDiv = document.createElement("div");
-			gradeDiv.setAttribute("class", "gradeDivClass");
-			
-			gradeDiv.appendChild(gradeInput);*/
-			
-			
-		
 			var cmtsTextArea = document.createElement("TEXTAREA");
 			cmtsTextArea.defaultValue = comments;
 			cmtsTextArea.setAttribute("name", "examRevision[]");
@@ -93,27 +78,11 @@ function loadScores(examScores){
 			commentsDiv.setAttribute("class", "commentsDivClass");
 			commentsDiv.appendChild(commentsPara);
 			commentsDiv.appendChild(cmtsTextArea);
-		
-			
-		
-			
-		
-			
-		
-			
-		
-			/*examTable.appendChild(tableRow);
-			examTable.appendChild(tableElement);
-			tableElement.appendChild(questionInput);
-			tableElement.appendChild(studentAnsTextArea);
-			tableElement.appendChild(gradeInput);
-			tableElement.appendChild(cmtsTextArea);*/
+
 			scoresForm.insertBefore(questionDiv,submitBtn);
 			scoresForm.insertBefore(studentResultDiv,submitBtn);
 			scoresForm.insertBefore(commentsDiv,submitBtn);
-			/*scoresForm.appendChild(studentAnsTextArea);
-			scoresForm.appendChild(gradeInput);
-			scoresForm.appendChild(cmtsTextArea);*/
+
 	}
 	var studentNameInput = document.createElement("INPUT");
 	studentNameInput.defaultValue = studentName;
@@ -143,8 +112,6 @@ function submitExam(){
 	xhttp.onreadystatechange = function(){
 		if(this.readyState == 4 && this.status == 200){
 			 var data = this.responseText;
-			 //var jsonResponse = JSON.parse(data);
-			 //alert(data);
 			 
 			 document.body.removeChild(examForm);
 			 var para = document.getElementById("response");

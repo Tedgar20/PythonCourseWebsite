@@ -5,15 +5,16 @@
 	<link rel="stylesheet" type="text/css" href="css/instructorHome.css">
 </head>
 	
-<body>
-	<input id="logout" type="button" value="Logout" onclick="location.href = 'https://web.njit.edu/~efc9/cs490/home/index.html';">
-	<h2>Instructor Home</h2>
-	<div class="Left" onclick="location.href='makeExam.html';">
-			<h3>Create an exam</h3>
-	</div>
+<input id="logout" type="button" value="Logout" onclick="location.href = 'https://web.njit.edu/~efc9/cs490/home/index.html';">
 
-	<div class="Right" onclick="location.href='instructorRevise.html';">
-			<h3>Grade student exams</h3>
-	</div>
+<body onload="getQuestions()">
+	<h2>Instructor Home</h2>
+
+<div class="pagination">
+<div class="container">
+<a class = "create btn btn-1" onclick="location.href='makeExam.html';">Create an exam</a>
+<a class = "revise btn btn-1" onclick="location.href='instructorRevise.html';">Grade student exams</a>
+</div>
+</div>
 </body>
 </html>

@@ -6,7 +6,6 @@ function getQuestions(){
 		if(this.readyState == 4 && this.status == 200){
 			 var data = this.responseText;
 			 var jsonResponse = JSON.parse(data);
-			 //document.getElementById("Database").innerHTML = data;
 			 makeQBank();
 			 for( var i in jsonResponse ){
 				loadQuestionBank(jsonResponse[i], +i+1);
@@ -30,6 +29,7 @@ function makeQBank(){
 	var previewExamBtn = document.createElement("INPUT");
 	previewExamBtn.setAttribute("type", "submit");
 	previewExamBtn.setAttribute("name", "submit");
+	previewExamBtn.setAttribute("class", "myButton");
 	previewExamBtn.setAttribute("value", "Preview Exam");
 	previewExamBtn.setAttribute("id", "previewExamButton");
 
@@ -50,6 +50,7 @@ function makeExamPreview(){
 	
 	var makeExamBtn = document.createElement("INPUT");
 	makeExamBtn.setAttribute("type", "submit");
+	makeExamBtn.setAttribute("class", "myButton");
 	makeExamBtn.setAttribute("name", "submit");
 	makeExamBtn.setAttribute("value", "Make Exam");
 	makeExamBtn.setAttribute("id", "makeExamButton");
@@ -94,6 +95,7 @@ function loadExamPreview(question, num) {
 	questionPoints.setAttribute("max", "100");
 	questionPoints.setAttribute("name", "examQuestions[]");
 	questionPoints.setAttribute("id", "question"+ran);
+	questionPoints.required = true;
 	
 	var questionLabel = document.createElement("LABEL");
 	questionLabel.setAttribute("for", "question"+ran);
@@ -216,8 +218,6 @@ function resetQBank(){
 		var div = document.getElementById("makeExamDiv");
 		if(div.contains(document.getElementById("choice"))) {
 			div.removeChild(document.getElementById("choice"));
-			var para = document.getElementById("response");
-			para.removeChild(para.childNodes[0]);
 			getQuestions();
 		}
 		else{
