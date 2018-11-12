@@ -122,7 +122,7 @@ function makeExam(){
 	xhttp.onreadystatechange = function(){
 		if(this.readyState == 4 && this.status == 200){
 			 var data = this.responseText;
-			 var jsonResponse = JSON.parse(data);
+			 //var jsonResponse = JSON.parse(data);
 			 var previewExam = document.getElementById("preview")
 			 var div = document.getElementById("examPreview");
 			
@@ -150,9 +150,9 @@ function submitQuestion(){
 		if(this.readyState == 4 && this.status == 200){
 			var data = this.responseText;
 			var submitQuestionForm = document.getElementById("question");
-			alert(data);
+			//alert(data);
 			window.location.reload();
-			//submitQuestionForm.reset();
+			submitQuestionForm.reset();
 		}
 	};
 	xhttp.open("POST", "https://web.njit.edu/~efc9/cs490/php/login_page.php",true);

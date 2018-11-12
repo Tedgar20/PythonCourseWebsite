@@ -77,7 +77,7 @@
 		);
 		$ch = createConnection("https://web.njit.edu/~ret5/CS490WebProj/testQBank.php", $data);
 
-		$response = json_encode(curl_exec($ch));
+		$response = curl_exec($ch);
 		curl_close($ch);
 		return $response;
 	}
