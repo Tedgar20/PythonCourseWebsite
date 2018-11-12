@@ -108,7 +108,15 @@ function finishExam(){
 		if(this.readyState == 4 && this.status == 200){
 			 var data = this.responseText;
 			 //var jsonResponse = JSON.parse(data);
-			 document.getElementById("Database2").innerHTML = data;
+			 document.body.removeChild(examForm);
+			 document.getElementById("response").innerHTML = data;
+			
+			var goBackBtn = document.createElement("INPUT");
+			goBackBtn.setAttribute("id", "goBack");
+			goBackBtn.setAttribute("type", "button");
+			goBackBtn.setAttribute("value", "Go Back");
+			goBackBtn.setAttribute("onclick", "location.href = 'https://web.njit.edu/~efc9/cs490/student/listExams.html';");
+			document.getElementById("gob").appendChild(goBackBtn);
 		}
 	};
 	xhttp.open("POST", "https://web.njit.edu/~efc9/cs490/php/grading.php",true);

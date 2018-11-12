@@ -8,6 +8,12 @@ html {
   background-size: auto;
 }
 
+#response{
+	color:white;
+	text-align: center;
+	font-size:30px;
+}
+
 #goBack {
 	margin: 0px 0px 0px 400px;
 }

@@ -115,7 +115,7 @@ function submitExam(){
 			 
 			 document.body.removeChild(examForm);
 			 var para = document.getElementById("response");
-			 para.appendChild(document.createTextNode(data + "You will now be redirected"));
+			 para.appendChild(document.createTextNode("Exam grades posted"));
 			 //sleep(3000); //milliseconds
 			 //window.location = "https://web.njit.edu/~efc9/cs490/instructor/instructorRevise.html";
 		}
