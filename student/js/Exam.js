@@ -37,12 +37,6 @@ function finalizeForm(){
 	submitExamBtn.setAttribute("name", "submit");
 	submitExamBtn.setAttribute("value", "Submit Exam");
 	
-	var goBackBtn = document.createElement("INPUT");
-	goBackBtn.setAttribute("id", "goBack");
-	goBackBtn.setAttribute("type", "button");
-	goBackBtn.setAttribute("value", "Go Back");
-	goBackBtn.setAttribute("onclick", "location.href = 'https://web.njit.edu/~efc9/cs490/student/listExams.html';");
-	
 	var currentUser = sessionStorage.getItem("currentUser");
 	var studentName = document.createElement("INPUT");
 	studentName.setAttribute("type", "hidden");
@@ -57,7 +51,6 @@ function finalizeForm(){
 	examIDToServer.setAttribute("name", "studentAnswers[]");
 	examIDToServer.setAttribute("value", examID);
 
-	document.getElementById("Exam").appendChild(goBackBtn);
 	document.getElementById("Exam").appendChild(submitExamBtn);
 	document.getElementById("Exam").appendChild(mybr);
 
@@ -109,14 +102,7 @@ function finishExam(){
 			 var data = this.responseText;
 			 //var jsonResponse = JSON.parse(data);
 			 document.body.removeChild(examForm);
-			 document.getElementById("response").innerHTML = data;
-			
-			var goBackBtn = document.createElement("INPUT");
-			goBackBtn.setAttribute("id", "goBack");
-			goBackBtn.setAttribute("type", "button");
-			goBackBtn.setAttribute("value", "Go Back");
-			goBackBtn.setAttribute("onclick", "location.href = 'https://web.njit.edu/~efc9/cs490/student/listExams.html';");
-			document.getElementById("gob").appendChild(goBackBtn);
+			 document.getElementById("Database").innerHTML = data;
 		}
 	};
 	xhttp.open("POST", "https://web.njit.edu/~efc9/cs490/php/grading.php",true);

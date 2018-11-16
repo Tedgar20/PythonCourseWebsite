@@ -32,29 +32,13 @@ function makeQBank(){
 	previewExamBtn.setAttribute("class", "myButton");
 	previewExamBtn.setAttribute("value", "Preview Exam");
 	previewExamBtn.setAttribute("id", "previewExamButton");
-	
-	/*var clearPreviewBtn = document.createElement("INPUT");
-	clearPreviewBtn.setAttribute("type", "button");
-	clearPreviewBtn.setAttribute("name", "submit");
-	clearPreviewBtn.setAttribute("class", "myButton");
-	clearPreviewBtn.setAttribute("value", "Clear Preview");
-	clearPreviewBtn.setAttribute("id", "clearPreviewButton");
-	clearPreviewBtn.setAttribute("onclick", "clearPreview()");*/
 
 	document.getElementById("makeExamDiv").appendChild(qBankForm);
 	document.getElementById("choice").appendChild(previewExamBtn);
-	//document.getElementById("choice").appendChild(clearPreviewBtn);
 	document.getElementById("choice").appendChild(mybr);
 }
-/*function clearPreview(){
-		var previewForm = document.getElementById("preview");
-		var previewFormChildren = previewForm.children;
-		for (var i = 0; i < previewFormChildren.length; i++) {
-			previewForm.removeChild(previewFormChildren[i]);
-		}
-}*/
 
-/*Creates a form that displays a preview of the exam for submission
+//Creates a form that displays a preview of the exam for submission
 function makeExamPreview(){
 	var mybr = document.createElement('br');
 	
@@ -74,7 +58,7 @@ function makeExamPreview(){
 	document.getElementById("examPreview").appendChild(examPreviewForm);
 	document.getElementById("preview").appendChild(makeExamBtn);
 	document.getElementById("preview").appendChild(mybr);
-}*/
+}
 
 //This function loads all the questions that were submitted to the question bank
 function loadQuestionBank (question, num) { 
@@ -181,7 +165,7 @@ function previewExam(){
 	var div = document.getElementById("examPreview");
 	var qBankChildren = qBankForm.children;
 	
-	/*if(div.childNodes.length != 1){
+	if(div.childNodes.length != 1){
 		//Comparing not equals 1 becuase an empty div still has a text node
 		if(div.contains(document.getElementById("preview"))) {
 			div.removeChild(document.getElementById("preview"));
@@ -191,7 +175,7 @@ function previewExam(){
 		}
 	}
 	
-	makeExamPreview();*/
+	makeExamPreview();
 	for (var i = 0; i < qBankChildren.length; i++) {
 		if( qBankChildren[i].checked ){
 			loadExamPreview(qBankChildren[i].value, i);

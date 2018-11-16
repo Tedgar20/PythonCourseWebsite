@@ -6,6 +6,7 @@ html {
 	background: linear-gradient(135deg, #e4f7cf 30%, #274467);
   background-repeat: no-repeat;
   background-size: auto;
+  background-attachment: fixed;
 }
 h3,h2 {
 		color:black;
