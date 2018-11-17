@@ -81,21 +81,29 @@
 			//Calculate the points to deduct for any missing keywords
 			$keyWordArray = explode(",", $keywords);
 			$eachKeyWordValue = ($totalKeyWordValue/sizeof($keyWordArray))*$questionValue;
+			$functionName = $keyWordArray[0];
 			for($j = 0; $j < sizeof($keyWordArray); $j++){
 				if(strpos($answers[$i], $keyWordArray[$j]) === false){
 					$totalDeductions += $eachKeyWordValue;
-					$keyWordReport .= "\n\nMissing keyword(".$keyWordArray[$j].") deduct ".round($eachKeyWordValue, 2)." points for this question\n";
+					$keyWordReport .= "\nMissing keyword(".$keyWordArray[$j].") deduct ".round($eachKeyWordValue, 2)." points\n";
 					//$totalDeductions += $eachKeyWordValue*$questionValue;
 					//$keyWordReport .= "\n\n# Missing (".$keyWordArray[$j].") deduct ".$eachKeyWordValue."% of total points for this question\n";
+				}
+				else{
+					$keyWordReport .= "\nContains keyword(".$keyWordArray[$j].") received ".round($eachKeyWordValue, 2)." points\n";
 				}
 			}
 			//Create a python file for each test case and see if the students function runs
 			for($k = 2; $k < sizeof($question); $k+=2){
 				$eachTestCaseValue = ($totalTestCaseValue/((sizeof($question)-2)/2))*$questionValue;
-					
+				
+				$withOutFunction = substr($answers[$i], strpos($answers[$i], "("));
+				$withFunction = "def " . $functionName;
+				$answerCopy = $withFunction . $withOutFunction;
+				
 				$functionCall = $question[$k];
 				$expectedAnswer = $question[$k+1];
-				$python = $answers[$i] . "\n" . "print(" . $functionCall . ")";
+				$python = $answerCopy . "\n" . "print(" . $functionCall . ")";
 				$fileName = "/afs/cad/u/e/f/efc9/public_html/grading/test.py";
 				$fh = fopen($fileName, 'w');
 
@@ -114,13 +122,15 @@
 						$testCaseReport .= "\nFailed Test case ".$functionCall." deduct ".round($eachTestCaseValue, 2)." points\n";
 						//$totalDeductions += $eachTestCaseValue*$questionValue;
 						//$testCaseReport .= "\n# Failed Test case ".$functionCall." deduct ".$eachTestCaseValue."% of total points\n";
+					}else{
+						$testCaseReport .= "\nPassed Test case ".$functionCall." received ".round($eachTestCaseValue, 2)." points\n";
 					}
 					unset($output);
 				}
 			}
-			$finalQuestionGrade = round(($questionValue - $totalDeductions), 2);
+			$finalQuestionGrade = round($questionValue - $totalDeductions);
 			$correctAnswers += $finalQuestionGrade;
-			$comments .= $keyWordReport . $testCaseReport . "# ". $finalQuestionGrade ."/". $questionValue ." points for this question";
+			$comments .= $keyWordReport . $testCaseReport . $finalQuestionGrade ."/". $questionValue ." points for this question";
 			
 			$data = array(
 				"gradedReport" => $answers[$i],
