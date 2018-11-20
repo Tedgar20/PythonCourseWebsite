@@ -26,6 +26,8 @@ function loadScores(examScores){
 			var studentAnswer = examScores[i+1];
 			var grade = examScores[i+2];
 			var comments = examScores[i+3];
+			// i+4 is an array of students output
+			// i+5 is an array of expected answers
 		
 			var tableRow = document.createElement("tr");
 			tableRow.setAttribute("id", "");
@@ -64,6 +66,7 @@ function loadScores(examScores){
 			studentResultDiv.appendChild(gradePara);
 			studentResultDiv.appendChild(gradeInput);
 		
+			
 			var cmtsTextArea = document.createElement("TEXTAREA");
 			cmtsTextArea.defaultValue = comments;
 			cmtsTextArea.setAttribute("name", "examRevision[]");
@@ -81,6 +84,7 @@ function loadScores(examScores){
 
 			scoresForm.insertBefore(questionDiv,submitBtn);
 			scoresForm.insertBefore(studentResultDiv,submitBtn);
+			//gradeReport(comments);
 			scoresForm.insertBefore(commentsDiv,submitBtn);
 
 	}
@@ -103,6 +107,29 @@ function loadScores(examScores){
 	scoresForm.appendChild(examIDInput);
 	scoresForm.appendChild(uniqueIDInput);
 }
+/*function gradeReport(report){
+		var commentsDiv = document.createElement("div");
+		commentsDiv.setAttribute("class", "commentsDivClass");
+		
+		var i = 0;
+		while (i < report.length)
+		{
+			
+			var j = report.indexOf("\n", i);
+			if (j == -1) j = report.length;
+			else{
+				var commentsPara = document.createElement("p");
+				var cmtsLabelText = document.createTextNode(report.substr(i, j-i));
+				commentsPara.appendChild(cmtsLabelText);
+				commentsPara.setAttribute("id", "commentsPara");
+				commentsDiv.appendChild(commentsPara);
+				
+			}
+			alert(report);
+			i = j+1;
+		}
+		document.getElementById("scores").insertBefore(commentsDiv,document.getElementById("submitButton"));
+}*/
 
 function submitExam(){
 	var xhttp = new XMLHttpRequest();
