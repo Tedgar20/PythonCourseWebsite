@@ -5,6 +5,7 @@ function getScores(){
 		if(this.readyState == 4 && this.status == 200){
 			 var data = this.responseText;
 			 var jsonResponse = JSON.parse(data);
+			 //alert(data);
 			 loadScores(jsonResponse);
 		}
 	};
@@ -16,23 +17,17 @@ function getScores(){
 function loadScores(examScores){
 	var scoresForm = document.getElementById("scores");
 	var submitBtn = document.getElementById("submitButton");
-	var examTable = document.getElementById("ExamTable");
 	var studentName = examScores[0];
 	var examID = examScores[1];
 	var uniqueID = sessionStorage.getItem("uniqueExam");
 	
-	for(var i = 2; i < examScores.length; i+=4){
+	for(var i = 2; i < examScores.length; i+=6){
 			var question = examScores[i];
 			var studentAnswer = examScores[i+1];
 			var grade = examScores[i+2];
 			var comments = examScores[i+3];
-			// i+4 is an array of students output
-			// i+5 is an array of expected answers
-		
-			var tableRow = document.createElement("tr");
-			tableRow.setAttribute("id", "");
-			var tableElement = document.createElement("td");
-			tableElement.setAttribute("id", "");
+			var studentOutput = examScores[i+4] // i+4 is an array of students output
+			var expectedAnswers = examScores[i+5] // i+5 is an array of expected answers
 		
 			var questionPara = document.createElement("p");
 			var questionParaText = document.createTextNode(question);
@@ -84,8 +79,8 @@ function loadScores(examScores){
 
 			scoresForm.insertBefore(questionDiv,submitBtn);
 			scoresForm.insertBefore(studentResultDiv,submitBtn);
-			//gradeReport(comments);
 			scoresForm.insertBefore(commentsDiv,submitBtn);
+			gradeReport(studentOutput,expectedAnswers);
 
 	}
 	var studentNameInput = document.createElement("INPUT");
@@ -107,29 +102,57 @@ function loadScores(examScores){
 	scoresForm.appendChild(examIDInput);
 	scoresForm.appendChild(uniqueIDInput);
 }
-/*function gradeReport(report){
-		var commentsDiv = document.createElement("div");
-		commentsDiv.setAttribute("class", "commentsDivClass");
+function gradeReport(studentOut, expectedAns){
+	var scoresForm = document.getElementById("scores");
+	var submitBtn = document.getElementById("submitButton");
+	var examTable = document.createElement("table");
+	
+	var tableRowHeader = document.createElement("tr");
+	tableRowHeader.setAttribute("id", "header");
+	
+	var tableHeaderExpected = document.createElement("th");
+	tableHeaderExpected.setAttribute("id", "Expected");
+	tableHeaderExpected.appendChild(document.createTextNode("Expected"))
+	
+	var tableHeaderStudent = document.createElement("th");
+	tableHeaderStudent.setAttribute("id", "Run");
+	tableHeaderStudent.appendChild(document.createTextNode("Run"))
+	
+	tableRowHeader.appendChild(tableHeaderExpected);
+	tableRowHeader.appendChild(tableHeaderStudent);
+	
+	examTable.appendChild(tableRowHeader);
+	
+	for(var i = 0; i < studentOut.length; i++){
+		var tableRowOutputs = document.createElement("tr");
+		tableRowOutputs.setAttribute("id", "outputs");
 		
-		var i = 0;
-		while (i < report.length)
-		{
-			
-			var j = report.indexOf("\n", i);
-			if (j == -1) j = report.length;
-			else{
-				var commentsPara = document.createElement("p");
-				var cmtsLabelText = document.createTextNode(report.substr(i, j-i));
-				commentsPara.appendChild(cmtsLabelText);
-				commentsPara.setAttribute("id", "commentsPara");
-				commentsDiv.appendChild(commentsPara);
-				
-			}
-			alert(report);
-			i = j+1;
-		}
-		document.getElementById("scores").insertBefore(commentsDiv,document.getElementById("submitButton"));
-}*/
+		
+		var expectedOutput = document.createElement("p");
+		expectedOutput.setAttribute("class", "expectedOutput");
+		var expectedOutputText = document.createTextNode(expectedAns[i]);
+		expectedOutput.appendChild(expectedOutputText);
+		
+		var tableElementExpect = document.createElement("td");
+		tableElementExpect.setAttribute("class", "expectedTableElmOutput");
+		tableElementExpect.appendChild(expectedOutput);
+		tableRowOutputs.appendChild(tableElementExpect);
+		
+		
+		var stOutput = document.createElement("p");
+		stOutput.setAttribute("class", "studentOutput");
+		var stOutputText = document.createTextNode(studentOut[i]);
+		stOutput.appendChild(stOutputText);
+		
+		var tableElementStud = document.createElement("td");
+		tableElementStud.setAttribute("class", "studentTableElemOutput");
+		tableElementStud.appendChild(stOutput);
+		tableRowOutputs.appendChild(tableElementStud);
+		
+		examTable.appendChild(tableRowOutputs);
+	}
+	scoresForm.insertBefore(examTable,submitBtn);
+}
 
 function submitExam(){
 	var xhttp = new XMLHttpRequest();

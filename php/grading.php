@@ -124,9 +124,9 @@
 						$testCaseReport .= "Passed Test case ".$functionCall." received ".round($eachTestCaseValue, 2)." points\n";
 					}
 					if( sizeof($output) < 1 ){
-						$studentOutput[] = "Solution could not run";
+						array_push($studentOutput,"Solution could not run");
 					}else{
-						$studentOutput[] = $output[0];
+						array_push($studentOutput, $output[0]);
 					}
 					unset($output);
 					//echo var_dump($output);
