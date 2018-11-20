@@ -61,6 +61,7 @@
 		$totalKeyWordValue = .2;
 		
 		for($i = 0; $i < sizeof($answers); $i+=2 ){
+			$studentOutput = []; //This array will hold the students output to each test case
 			$totalDeductions = 0;
 			$keyWordReport = "";
 			$testCaseReport = "";
@@ -85,12 +86,10 @@
 			for($j = 0; $j < sizeof($keyWordArray); $j++){
 				if(strpos($answers[$i], $keyWordArray[$j]) === false){
 					$totalDeductions += $eachKeyWordValue;
-					$keyWordReport .= "\nMissing keyword(".$keyWordArray[$j].") deduct ".round($eachKeyWordValue, 2)." points\n";
-					//$totalDeductions += $eachKeyWordValue*$questionValue;
-					//$keyWordReport .= "\n\n# Missing (".$keyWordArray[$j].") deduct ".$eachKeyWordValue."% of total points for this question\n";
+					$keyWordReport .= "Missing keyword(".$keyWordArray[$j].") deduct ".round($eachKeyWordValue, 2)." points\n";
 				}
 				else{
-					$keyWordReport .= "\nContains keyword(".$keyWordArray[$j].") received ".round($eachKeyWordValue, 2)." points\n";
+					$keyWordReport .= "Contains keyword(".$keyWordArray[$j].") received ".round($eachKeyWordValue, 2)." points\n";
 				}
 			}
 			//Create a python file for each test case and see if the students function runs
@@ -100,6 +99,7 @@
 				$withOutFunction = substr($answers[$i], strpos($answers[$i], "("));
 				$withFunction = "def " . $functionName;
 				$answerCopy = $withFunction . $withOutFunction;
+				//echo $answerCopy;
 				
 				$functionCall = $question[$k];
 				$expectedAnswer = $question[$k+1];
@@ -119,13 +119,17 @@
 					$run = exec("/afs/cad/linux/anaconda3.6/anaconda/bin/python3 {$fileName}", $output, $status);
 					if( $output[0] !== $expectedAnswer ){
 						$totalDeductions += $eachTestCaseValue;
-						$testCaseReport .= "\nFailed Test case ".$functionCall." deduct ".round($eachTestCaseValue, 2)." points\n";
-						//$totalDeductions += $eachTestCaseValue*$questionValue;
-						//$testCaseReport .= "\n# Failed Test case ".$functionCall." deduct ".$eachTestCaseValue."% of total points\n";
+						$testCaseReport .= "Failed Test case ".$functionCall." deduct ".round($eachTestCaseValue, 2)." points\n";
 					}else{
-						$testCaseReport .= "\nPassed Test case ".$functionCall." received ".round($eachTestCaseValue, 2)." points\n";
+						$testCaseReport .= "Passed Test case ".$functionCall." received ".round($eachTestCaseValue, 2)." points\n";
+					}
+					if( sizeof($output) < 1 ){
+						$studentOutput[] = "Solution could not run";
+					}else{
+						$studentOutput[] = $output[0];
 					}
 					unset($output);
+					//echo var_dump($output);
 				}
 			}
 			$finalQuestionGrade = round($questionValue - $totalDeductions);
@@ -137,6 +141,7 @@
 				"comments" => $comments,
 				"questionGrade" => $finalQuestionGrade,
 				"student" => $student,
+				"studentOutput" => $studentOutput, //Send an array containing the students output for each test case to the database
 				"EXAMID" => $id,
 				"special_ID" => $special_ID
 			);
