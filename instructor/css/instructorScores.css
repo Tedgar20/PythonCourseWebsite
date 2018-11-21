@@ -23,11 +23,31 @@ input[type=number]::-webkit-outer-spin-button {
 	text-align: center;
 	font-size:30px;
 }
+
 h3,h2 {
 		color:white;
 		text-align: center;
 }
 
+table#ExamTable{
+	width:100%;
+	table-layout:fixed;
+    border: 1px solid black;
+	
+}
+td, th{
+	border: 2px solid black;
+	padding: 4px;
+	word-wrap: break-word;
+}
+td.wrongAns{
+	min-width: 22px;
+	background-color:red;	
+}
+td.correctAns{
+	min-width: 22px;
+	background-color: green;	
+}
 #goBack {
 	margin: 0px 0px 0px 0px;
   font-size:18px;
@@ -35,19 +55,24 @@ h3,h2 {
 
 textarea {
 	font-size:18px;
-	width: 90%;
-  height: 300px;
-	margin-left: 5%;
+	width: 525px;
+  	height: 300px;
+	-webkit-box-sizing: border-box; /* <=iOS4, <= Android  2.3 */
+       -moz-box-sizing: border-box; /* FF1+ */
+            box-sizing: border-box; /* Chrome, IE8, Opera, Safari 5.1*/
+	/*margin-left: 5%;
 	margin-right: 5%;
-  overflow: auto;
-	resize: none;
+  	overflow: auto;
+	resize: none;*/
+	white-space: pre;
 	
 }
 
 #question {
 	padding-top: 50px;	
-	font-size: 30px;
+	font-size: 20px;
 	/*text-align: center;*/
+	white-space: pre-line;
 	color:white;
 }
 

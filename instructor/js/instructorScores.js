@@ -5,6 +5,7 @@ function getScores(){
 		if(this.readyState == 4 && this.status == 200){
 			 var data = this.responseText;
 			 var jsonResponse = JSON.parse(data);
+			 //alert(data);
 			 loadScores(jsonResponse);
 		}
 	};
@@ -16,37 +17,39 @@ function getScores(){
 function loadScores(examScores){
 	var scoresForm = document.getElementById("scores");
 	var submitBtn = document.getElementById("submitButton");
-	var examTable = document.getElementById("ExamTable");
 	var studentName = examScores[0];
 	var examID = examScores[1];
 	var uniqueID = sessionStorage.getItem("uniqueExam");
 	
-	for(var i = 2; i < examScores.length; i+=4){
+	var examTable = document.getElementById("ExamTable");
+	examTable.setAttribute("id", "examTable");
+	
+	for(var i = 2; i < examScores.length; i+=6){
 			var question = examScores[i];
 			var studentAnswer = examScores[i+1];
 			var grade = examScores[i+2];
 			var comments = examScores[i+3];
-			// i+4 is an array of students output
-			// i+5 is an array of expected answers
+			var studentOutput = examScores[i+4] // i+4 is an array of students output
+			var expectedAnswers = examScores[i+5] // i+5 is an array of expected answers
 		
 			var tableRow = document.createElement("tr");
-			tableRow.setAttribute("id", "");
-			var tableElement = document.createElement("td");
-			tableElement.setAttribute("id", "");
-		
+			var tableElementQuestion = document.createElement("td");
+			var tableElementAnswer = document.createElement("td");
+			var tableElementDeductions = document.createElement("td");
+			var tableElementGrade = document.createElement("td");
+			
 			var questionPara = document.createElement("p");
+			questionPara.setAttribute("id", "question");
 			var questionParaText = document.createTextNode(question);
 			questionPara.appendChild(questionParaText);
-			questionPara.setAttribute("id", "question");
-		
-			var questionDiv = document.createElement("div");
-			questionDiv.appendChild(questionPara);
-			questionDiv.setAttribute("class", "questionDivClass");
+			tableElementQuestion.appendChild(questionPara);
 		
 			var studentAnsTextArea = document.createElement("TEXTAREA");
 			studentAnsTextArea.defaultValue = studentAnswer;
 		    studentAnsTextArea.readOnly = true;
 			studentAnsTextArea.setAttribute("name", "examRevision[]");
+			studentAnsTextArea.setAttribute("class", "studentAnsClass");
+			tableElementAnswer.appendChild(studentAnsTextArea);
 			
 			var gradeInput = document.createElement("INPUT");
 			gradeInput.defaultValue = grade;
@@ -55,37 +58,22 @@ function loadScores(examScores){
 			gradeInput.setAttribute("min", "0");
 			gradeInput.setAttribute("max", "100");
 			gradeInput.setAttribute("name", "examRevision[]");
-			var gradePara = document.createElement("p");
-			var gradeText = document.createTextNode("Points:");
-			gradePara.appendChild(gradeText);
-			gradePara.setAttribute("id", "gradePara");
-		
-			var studentResultDiv = document.createElement("div");
-			studentResultDiv.setAttribute("class", "studentResultsDivClass");
-			studentResultDiv.appendChild(studentAnsTextArea);
-			studentResultDiv.appendChild(gradePara);
-			studentResultDiv.appendChild(gradeInput);
-		
+			tableElementGrade.appendChild(gradeInput);
 			
 			var cmtsTextArea = document.createElement("TEXTAREA");
 			cmtsTextArea.defaultValue = comments;
 			cmtsTextArea.setAttribute("name", "examRevision[]");
 			cmtsTextArea.setAttribute("id", "comments");
+			tableElementDeductions.appendChild(cmtsTextArea);
 		
-			var commentsPara = document.createElement("p");
-			var cmtsLabelText = document.createTextNode("Grade Report:");
-			commentsPara.appendChild(cmtsLabelText);
-			commentsPara.setAttribute("id", "commentsPara");
-		
-			var commentsDiv = document.createElement("div");
-			commentsDiv.setAttribute("class", "commentsDivClass");
-			commentsDiv.appendChild(commentsPara);
-			commentsDiv.appendChild(cmtsTextArea);
+			tableRow.appendChild(tableElementQuestion);
+			tableRow.appendChild(tableElementAnswer);
+			tableRow.appendChild(tableElementGrade);
+			tableRow.appendChild(tableElementDeductions);
+			gradeReport(studentOutput,expectedAnswers,tableRow);
+			examTable.appendChild(tableRow);
 
-			scoresForm.insertBefore(questionDiv,submitBtn);
-			scoresForm.insertBefore(studentResultDiv,submitBtn);
-			//gradeReport(comments);
-			scoresForm.insertBefore(commentsDiv,submitBtn);
+			
 
 	}
 	var studentNameInput = document.createElement("INPUT");
@@ -107,29 +95,62 @@ function loadScores(examScores){
 	scoresForm.appendChild(examIDInput);
 	scoresForm.appendChild(uniqueIDInput);
 }
-/*function gradeReport(report){
-		var commentsDiv = document.createElement("div");
-		commentsDiv.setAttribute("class", "commentsDivClass");
+function gradeReport(studentOut, expectedAns, row){
+	var outputTable = document.createElement("table");
+	outputTable.setAttribute("id", "outputTable");
+	row.appendChild(outputTable);
+	
+	var tableHeaderExpected = document.createElement("th");
+	tableHeaderExpected.setAttribute("id", "Expected");
+	tableHeaderExpected.appendChild(document.createTextNode("Expected"))
+	
+	var tableHeaderStudent = document.createElement("th");
+	tableHeaderStudent.setAttribute("id", "Run");
+	tableHeaderStudent.appendChild(document.createTextNode("Run"))
+	
+	outputTable.appendChild(tableHeaderExpected);
+	outputTable.appendChild(tableHeaderStudent);
+	
+	for(var i = 0; i < studentOut.length; i++){
+		var tableRowOutputs = document.createElement("tr");
+		tableRowOutputs.setAttribute("id", "outputs");
 		
-		var i = 0;
-		while (i < report.length)
-		{
-			
-			var j = report.indexOf("\n", i);
-			if (j == -1) j = report.length;
-			else{
-				var commentsPara = document.createElement("p");
-				var cmtsLabelText = document.createTextNode(report.substr(i, j-i));
-				commentsPara.appendChild(cmtsLabelText);
-				commentsPara.setAttribute("id", "commentsPara");
-				commentsDiv.appendChild(commentsPara);
-				
-			}
-			alert(report);
-			i = j+1;
+		
+		var expectedOutput = document.createElement("p");
+		expectedOutput.setAttribute("class", "expectedOutput");
+		var expectedOutputText = document.createTextNode(expectedAns[i]);
+		expectedOutput.appendChild(expectedOutputText);
+		
+		var tableElementExpect = document.createElement("td");
+		tableElementExpect.setAttribute("class", "expectedTableElmOutput");
+		tableElementExpect.appendChild(expectedOutput);
+		tableRowOutputs.appendChild(tableElementExpect);
+		
+		
+		var stOutput = document.createElement("p");
+		stOutput.setAttribute("class", "studentOutput");
+		var stOutputText = document.createTextNode(studentOut[i]);
+		stOutput.appendChild(stOutputText);
+		
+		var tableElementStud = document.createElement("td");
+		tableElementStud.setAttribute("class", "studentTableElemOutput");
+		tableElementStud.appendChild(stOutput);
+		tableRowOutputs.appendChild(tableElementStud);
+		
+		var tableElementResult = document.createElement("td");
+		var tableElementColor = document.createElement("td");
+		if( studentOut[i] == expectedAns[i] ){
+			tableElementResult.appendChild(document.createTextNode("CORRECT"));
+			tableElementColor.setAttribute("class", "correctAns");
+		}else{
+			tableElementResult.appendChild(document.createTextNode("WRONG"));
+			tableElementColor.setAttribute("class", "wrongAns");
 		}
-		document.getElementById("scores").insertBefore(commentsDiv,document.getElementById("submitButton"));
-}*/
+		tableRowOutputs.appendChild(tableElementResult);
+		tableRowOutputs.appendChild(tableElementColor);
+		outputTable.appendChild(tableRowOutputs);
+	}
+}
 
 function submitExam(){
 	var xhttp = new XMLHttpRequest();
