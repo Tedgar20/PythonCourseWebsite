@@ -34,6 +34,7 @@ function loadScores(examScores){
 		
 			var tableRow = document.createElement("tr");
 			var tableElementQuestion = document.createElement("td");
+			tableElementQuestion.setAttribute("id","tdQuestion");
 			var tableElementAnswer = document.createElement("td");
 			var tableElementDeductions = document.createElement("td");
 			var tableElementGrade = document.createElement("td");
@@ -72,9 +73,6 @@ function loadScores(examScores){
 			tableRow.appendChild(tableElementDeductions);
 			gradeReport(studentOutput,expectedAnswers,tableRow);
 			examTable.appendChild(tableRow);
-
-			
-
 	}
 	var studentNameInput = document.createElement("INPUT");
 	studentNameInput.defaultValue = studentName;
@@ -115,7 +113,6 @@ function gradeReport(studentOut, expectedAns, row){
 		var tableRowOutputs = document.createElement("tr");
 		tableRowOutputs.setAttribute("id", "outputs");
 		
-		
 		var expectedOutput = document.createElement("p");
 		expectedOutput.setAttribute("class", "expectedOutput");
 		var expectedOutputText = document.createTextNode(expectedAns[i]);
@@ -125,7 +122,6 @@ function gradeReport(studentOut, expectedAns, row){
 		tableElementExpect.setAttribute("class", "expectedTableElmOutput");
 		tableElementExpect.appendChild(expectedOutput);
 		tableRowOutputs.appendChild(tableElementExpect);
-		
 		
 		var stOutput = document.createElement("p");
 		stOutput.setAttribute("class", "studentOutput");
