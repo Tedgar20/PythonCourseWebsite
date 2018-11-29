@@ -33,48 +33,27 @@ function makeQBank(){
 	previewExamBtn.setAttribute("value", "Preview Exam");
 	previewExamBtn.setAttribute("id", "previewExamButton");
 	
-	/*var clearPreviewBtn = document.createElement("INPUT");
+	var clearPreviewBtn = document.createElement("INPUT");
 	clearPreviewBtn.setAttribute("type", "button");
 	clearPreviewBtn.setAttribute("name", "submit");
 	clearPreviewBtn.setAttribute("class", "myButton");
 	clearPreviewBtn.setAttribute("value", "Clear Preview");
 	clearPreviewBtn.setAttribute("id", "clearPreviewButton");
-	clearPreviewBtn.setAttribute("onclick", "clearPreview()");*/
+	clearPreviewBtn.setAttribute("onclick", "clearPreview()");
 
 	document.getElementById("makeExamDiv").appendChild(qBankForm);
 	document.getElementById("choice").appendChild(previewExamBtn);
-	//document.getElementById("choice").appendChild(clearPreviewBtn);
+	document.getElementById("choice").appendChild(clearPreviewBtn);
 	document.getElementById("choice").appendChild(mybr);
 }
-/*function clearPreview(){
+function clearPreview(){
 		var previewForm = document.getElementById("preview");
 		var previewFormChildren = previewForm.children;
-		for (var i = 0; i < previewFormChildren.length; i++) {
-			previewForm.removeChild(previewFormChildren[i]);
+		
+		while(previewForm.length > 1){
+				 previewForm.removeChild(previewForm.firstChild);
 		}
-}*/
-
-/*Creates a form that displays a preview of the exam for submission
-function makeExamPreview(){
-	var mybr = document.createElement('br');
-	
-	var examPreviewForm = document.createElement('form');
-	examPreviewForm.setAttribute("id", "preview");
-	examPreviewForm.setAttribute("action", "javascript:makeExam()");
-	examPreviewForm.setAttribute("method", "post");
-	examPreviewForm.setAttribute("accept-charset", "utf-8");	
-	
-	var makeExamBtn = document.createElement("INPUT");
-	makeExamBtn.setAttribute("type", "submit");
-	makeExamBtn.setAttribute("class", "myButton");
-	makeExamBtn.setAttribute("name", "submit");
-	makeExamBtn.setAttribute("value", "Make Exam");
-	makeExamBtn.setAttribute("id", "makeExamButton");
-
-	document.getElementById("examPreview").appendChild(examPreviewForm);
-	document.getElementById("preview").appendChild(makeExamBtn);
-	document.getElementById("preview").appendChild(mybr);
-}*/
+}
 
 //This function loads all the questions that were submitted to the question bank
 function loadQuestionBank (question, num) { 
@@ -100,7 +79,7 @@ function loadQuestionBank (question, num) {
 
 function loadExamPreview(question, num) {
 	//ran is used to make random id numbers
-	var ran = Math.random() * num;
+	//var ran = Math.random() * num;
 	var mybr = document.createElement('br');
 	var questionTextNode = document.createTextNode(question);
 	var makeExamBtn = document.getElementById("makeExamButton");
@@ -110,22 +89,28 @@ function loadExamPreview(question, num) {
 	questionPoints.setAttribute("min", "1");
 	questionPoints.setAttribute("max", "100");
 	questionPoints.setAttribute("name", "examQuestions[]");
-	questionPoints.setAttribute("id", "question"+ran);
+	//questionPoints.setAttribute("id", "question"+ran);
 	questionPoints.required = true;
 	
-	var questionLabel = document.createElement("LABEL");
+	/*var questionLabel = document.createElement("LABEL");
 	questionLabel.setAttribute("for", "question"+ran);
-	questionLabel.setAttribute("id", ran);
+	questionLabel.setAttribute("id", ran);*/
+	
+	var questionLabel = document.createElement("p");
+	questionLabel.appendChild(questionPoints);
+	questionLabel.appendChild(questionTextNode);
+	
 	
 	var exmQuestion = document.createElement("INPUT");
 	exmQuestion.setAttribute("type", "hidden");
 	exmQuestion.setAttribute("value", question);
 	exmQuestion.setAttribute("name", "examQuestions[]");
 	
-	document.getElementById("preview").insertBefore(questionPoints, makeExamBtn);
+	//document.getElementById("preview").insertBefore(questionPoints, makeExamBtn);
+	//document.getElementById("preview").insertBefore(questionLabel, makeExamBtn);
 	document.getElementById("preview").insertBefore(questionLabel, makeExamBtn);
 	document.getElementById("preview").insertBefore(exmQuestion, makeExamBtn);
-	document.getElementById(ran).appendChild(questionTextNode);
+	//document.getElementById(ran).appendChild(questionTextNode);
 	document.getElementById("preview").insertBefore(mybr, makeExamBtn);
 }
 
@@ -145,8 +130,10 @@ function makeExam(){
 			 var paraResp = document.createElement("p");
 			 paraResp.setAttribute("id", "examSubmitted");
 			 paraResp.appendChild(document.createTextNode(data));
-			
-			 div.removeChild(previewExam);
+			 //div.removeChild(previewExam);
+			 while(previewExam.length > 1){
+				 previewExam.removeChild(previewExam.firstChild);
+			 }
 			 div.appendChild(paraResp);
 			 
 		}
@@ -190,8 +177,11 @@ function previewExam(){
 			div.removeChild(document.getElementById("examSubmitted"));
 		}
 	}
-	
 	makeExamPreview();*/
+	
+	//If an exam was submitted this removes the exam submitted text
+	if( document.getElementById("examSubmitted") != null )
+		div.removeChild(document.getElementById("examSubmitted"));
 	for (var i = 0; i < qBankChildren.length; i++) {
 		if( qBankChildren[i].checked ){
 			loadExamPreview(qBankChildren[i].value, i);
@@ -228,7 +218,6 @@ function filterQuestions(diff,type){
 	xhttp.send(`diff=${diff}&type=${type}`);
 }
 
-
 //Handles resetting the question bank to list all questions
 function resetQBank(){
 		var div = document.getElementById("makeExamDiv");
@@ -242,5 +231,3 @@ function resetQBank(){
 			getQuestions();
 		}
 }
-
-

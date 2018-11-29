@@ -80,6 +80,9 @@ textarea {
 td#tdQuestion{
 	width:25%;	
 }
+td#tdAnswer{
+	width:25%;	
+}
 
 #question {
 	padding-top: 50px;	

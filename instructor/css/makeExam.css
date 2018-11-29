@@ -33,6 +33,9 @@ textarea {
   overflow: auto;
 }
 
+p{
+	display:inline;
+}
 
 .answers{
 	padding-left:2em;

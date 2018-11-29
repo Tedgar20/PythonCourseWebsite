@@ -2,10 +2,10 @@ html {
 	height: 100%;
 	padding: 0;
 	margin: 0;
-  font-family: Arial;
-	background: #354972;
-  background-repeat: repeat;
-  background-size: auto;
+	font-family: verdana, arial, helvetica, sans-serif;
+    background: #354972;
+    background-repeat: repeat;
+    background-size: auto;
 }
 
 /* For Firefox */
@@ -29,15 +29,17 @@ h3,h2,h1 {
   font-size:18px;
 }
 
-table#ExamTable{
+table#ExamTable, #outputTable{
 	width:100%;
-	table-layout:fixed;
-    border: 1px solid black;
+	/*table-layout:fixed;*/
+    border: 2px solid black;
+	border-collapse:collapse;
+	background-color:white;
 }
 
 th, td {
-	border: 1px solid black;
-	padding:25px;
+	border: 2px solid black;
+	padding:10px;
 	word-wrap: break-word;
 }
 
@@ -49,7 +51,18 @@ th{
 td {
 	background-color:#FFFFFF
 }
+td#tdQuestion{
+    width: 25%;
+}
 
+td.wrongAns{
+	min-width: 22px;
+	background-color:red;	
+}
+td.correctAns{
+	min-width: 22px;
+	background-color: green;	
+}
 
 .studentAnsClass{
 		white-space: pre;

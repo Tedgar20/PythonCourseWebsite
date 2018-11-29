@@ -1,6 +1,6 @@
 <?php
 	header('Content-type:application/json;charset=utf-8');
-
+	ini_set('display_errors', 1);
 	function createConnection($url, $data){
 		$ch = curl_init($url);
 		$postString = http_build_query($data, '', '&');
@@ -152,6 +152,7 @@
 		$ch = createConnection("https://web.njit.edu/~ret5/CS490WebProj/testStudentBack.php", $data);
 		
 		$response = curl_exec($ch);
+        //echo $response;
 		curl_close($ch);
 		return $response;
 	}
@@ -178,7 +179,7 @@
 		$response = json_decode($response);
 		curl_close($ch);
 		$finalGrade = 0;
-		for($j = 2; $j < sizeof($response); $j+=4){
+		for($j = 2; $j < sizeof($response); $j+=6){
 			$finalGrade += $response[$j];
 		}
 		$response[sizeof($response)] = $finalGrade;

@@ -23,7 +23,6 @@ function loadScores(examScores){
 	
 	var examTable = document.getElementById("ExamTable");
 	examTable.setAttribute("id", "examTable");
-	
 	for(var i = 2; i < examScores.length; i+=6){
 			var question = examScores[i];
 			var studentAnswer = examScores[i+1];
@@ -33,11 +32,18 @@ function loadScores(examScores){
 			var expectedAnswers = examScores[i+5] // i+5 is an array of expected answers
 		
 			var tableRow = document.createElement("tr");
-			var tableElementQuestion = document.createElement("td");
+			
+            var tableElementQuestion = document.createElement("td");
 			tableElementQuestion.setAttribute("id","tdQuestion");
-			var tableElementAnswer = document.createElement("td");
-			var tableElementDeductions = document.createElement("td");
-			var tableElementGrade = document.createElement("td");
+			
+            var tableElementAnswer = document.createElement("td");
+            tableElementAnswer.setAttribute("id","tdAnswer");
+			
+            var tableElementDeductions = document.createElement("td");
+            tableElementDeductions.setAttribute("id","tdDeductions");
+			
+            var tableElementGrade = document.createElement("td");
+            tableElementGrade.setAttribute("id","tdGrade");
 			
 			var questionPara = document.createElement("p");
 			questionPara.setAttribute("id", "question");
